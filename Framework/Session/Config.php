@@ -34,4 +34,22 @@ class Config extends \Magento\Framework\Session\Config
     {
         return parent::setCookieSameSite('None');
     }
+
+    /**
+     * @return bool
+     */
+    public function getCookieSecure()
+    {
+        return true;
+    }
+
+    /**
+     * Get session.cookie_samesite
+     *
+     * @return string
+     */
+    public function getCookieSameSite(): string
+    {
+        return 'None';
+    }
 }
