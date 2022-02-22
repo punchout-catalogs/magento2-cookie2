@@ -15,7 +15,8 @@ $sessionConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(
             "path": "<?= $block->escapeJs($block->getPath()) ?>",
             "domain": "<?= $block->escapeJs($block->getDomain()) ?>",
             "secure": <?= $sessionConfig->getCookieSecure() ? 'true' : 'false' ?>,
-            "lifetime": "<?= $block->escapeJs($block->getLifetime()) ?>"
+            "lifetime": "<?= $block->escapeJs($block->getLifetime()) ?>",
+            "samesite": "<?= $block->escapeJs($sessionConfig->getCookieSameSite()) ?>"
         }
     }
 }</script>
