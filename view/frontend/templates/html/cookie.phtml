@@ -16,7 +16,7 @@ $sameSite = $sessionConfig->getCookieSameSite();
 $scriptString = "
     window.cookiesConfig = window.cookiesConfig || {};
     window.cookiesConfig.secure = $isCookieSecure;
-    window.cookiesConfig.samesite = '<?= $sameSite ?>';
+    window.cookiesConfig.samesite = '$sameSite';
 ";
 ?>
 

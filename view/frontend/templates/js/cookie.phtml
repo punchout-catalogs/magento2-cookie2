@@ -19,8 +19,3 @@ $sessionConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(
         }
     }
 }</script>
-<script type="text/javascript">
-    window.cookiesConfig = window.cookiesConfig || {};
-    window.cookiesConfig.secure = <?php echo $sessionConfig->getCookieSecure() ? 'true' : 'false' ?>;
-    window.cookiesConfig.samesite = "<?php echo $sessionConfig->getCookieSameSite() ?>";
-</script>
