@@ -8,21 +8,21 @@ define([
     'use strict';
 
     function _extend(storage) {
-        var origSetConf = storage.setConf.bind(storage);
-        var origSetItem = storage.setItem.bind(storage);
+        storage._samesite = window.cookiesConfig && window.cookiesConfig.samesite ? window.cookiesConfig.samesite : 'lax';
 
         storage.setItem = function (name, value, options) {
             options = options || {};
-            options.samesite = 'None';
-            //
-            return origSetItem(name, value, options);
-        };
+            options.samesite = 'None';//hardcode
 
-        storage.setConf =  function (c) {
-            c = c || {};
-            c.samesite = 'None';
-            //
-            return origSetConf(c);
+            var _default = {
+                expires: this._expires,
+                path: this._path,
+                domain: this._domain,
+                secure: this._secure,
+                samesite: this._samesite
+            };
+
+            $.cookie(this._prefix + name, value, $.extend(_default, options || {}));
         };
     };
 
@@ -31,14 +31,47 @@ define([
     }
 
     if ($.mage && $.mage.cookies) {
-        var origSet = $.mage.cookies.set.bind($.mage.cookies);
+        //duplicated part of code from 2.4.3 for CE/EE below 2.4.3
+        function lifetimeToExpires(options, defaults) {
+            var expires,
+                lifetime;
 
+            lifetime = options.lifetime || defaults.lifetime;
+
+            if (lifetime && lifetime > 0) {
+                expires = options.expires || new Date();
+
+                return new Date(expires.getTime() + lifetime * 1000);
+            }
+
+            return null;
+        }
+
+        //duplicated part of code from 2.4.3 for CE/EE below 2.4.3
         $.extend($.mage.cookies, {
             set: function (name, value, options) {
                 options = options || {};
                 options.samesite = 'None';
                 //
-                return origSet(name, value, options);
+                var expires,
+                    path,
+                    domain,
+                    secure,
+                    samesite;
+
+                options = $.extend({}, this.defaults, options || {});
+                expires = lifetimeToExpires(options, this.defaults) || options.expires;
+                path = options.path;
+                domain = options.domain;
+                secure = options.secure;
+                samesite = options.samesite;
+
+                document.cookie = name + '=' + encodeURIComponent(value) +
+                    (expires ? '; expires=' + expires.toUTCString() :  '') +
+                    (path ? '; path=' + path : '') +
+                    (domain ? '; domain=' + domain : '') +
+                    (secure ? '; secure' : '') +
+                    '; samesite=' + (samesite ? samesite : 'lax');
             }
         });
     }
