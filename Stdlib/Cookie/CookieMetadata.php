@@ -7,6 +7,8 @@ use Magento\Framework\Stdlib\Cookie\CookieMetadata as BaseCookieMetadata;
 class CookieMetadata extends BaseCookieMetadata
 {
     /**
+     * CE/EE 2.4.3+
+     *
      * Setter for Cookie SameSite attribute
      *
      * @param  string $sameSite

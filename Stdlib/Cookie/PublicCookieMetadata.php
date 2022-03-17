@@ -7,6 +7,8 @@ use Magento\Framework\Stdlib\Cookie\CookieMetadata as BaseCookieMetadata;
 class PublicCookieMetadata extends \Magento\Framework\Stdlib\Cookie\PublicCookieMetadata
 {
     /**
+     * CE/EE 2.4.3+
+     *
      * Setter for Cookie SameSite attribute
      *
      * @param  string $sameSite

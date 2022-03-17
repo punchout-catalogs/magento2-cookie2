@@ -7,6 +7,8 @@ use Magento\Framework\Stdlib\Cookie\CookieMetadata as BaseCookieMetadata;
 class SensitiveCookieMetadata extends \Magento\Framework\Stdlib\Cookie\SensitiveCookieMetadata
 {
     /**
+     * CE/EE 2.4.3+
+     *
      * Setter for Cookie SameSite attribute
      *
      * @param  string $sameSite
