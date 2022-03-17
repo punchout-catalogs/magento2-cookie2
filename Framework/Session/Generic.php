@@ -37,7 +37,7 @@ class Generic extends \Magento\Framework\Session\Generic
      */
     protected function updateCookieParams()
     {
-        if ($this->isPhpCookieOptionsSupported()) {
+        if (version_compare(PHP_VERSION, "7.3.0", ">=")) {
             return $this->updateCookieParamsWithOptions();
         } else {
             return $this->updateCookieParamsWithoutOptions();
@@ -93,10 +93,5 @@ class Generic extends \Magento\Framework\Session\Generic
         );
 
         return $this;
-    }
-
-    public function isPhpCookieOptionsSupported()
-    {
-        return version_compare(PHP_VERSION, "7.3.0", ">=");
     }
 }

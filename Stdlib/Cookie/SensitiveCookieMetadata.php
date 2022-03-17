@@ -21,4 +21,12 @@ class SensitiveCookieMetadata extends \Magento\Framework\Stdlib\Cookie\Sensitive
         }
         return parent::setSameSite('None');
     }
+
+    /**
+     * @return array
+     */
+    public function __toArray()
+    {
+        return Utils::wrapMetadata(parent::__toArray());
+    }
 }

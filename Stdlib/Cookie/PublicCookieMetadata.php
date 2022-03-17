@@ -32,4 +32,12 @@ class PublicCookieMetadata extends \Magento\Framework\Stdlib\Cookie\PublicCookie
     {
         return parent::setSecure(true);
     }
+
+    /**
+     * @return array
+     */
+    public function __toArray()
+    {
+        return Utils::wrapMetadata(parent::__toArray());
+    }
 }

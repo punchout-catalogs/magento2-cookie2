@@ -21,4 +21,12 @@ class CookieMetadata extends BaseCookieMetadata
         }
         return parent::setSameSite('None');
     }
+
+    /**
+     * @return array
+     */
+    public function __toArray()
+    {
+        return Utils::wrapMetadata(parent::__toArray());
+    }
 }
