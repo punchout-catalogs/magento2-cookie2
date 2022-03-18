@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Punchout\Cookie2\Framework\Session;
 
 use Magento\Framework\Session\Config\ConfigInterface;
+use Punchout\Cookie2\Framework\Utils;
 
 /**
  * Magento session configuration
@@ -51,5 +52,15 @@ class Config extends \Magento\Framework\Session\Config
     public function getCookieSameSite(): string
     {
         return 'None';
+    }
+    
+    /**
+     * Get all options set
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return Utils::wrapSessionOptions(parent::getOptions());
     }
 }

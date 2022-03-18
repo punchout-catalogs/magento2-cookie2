@@ -3,6 +3,7 @@
 namespace Punchout\Cookie2\Stdlib\Cookie;
 
 use Magento\Framework\Stdlib\Cookie\CookieMetadata as BaseCookieMetadata;
+use Punchout\Cookie2\Framework\Utils;
 
 class SensitiveCookieMetadata extends \Magento\Framework\Stdlib\Cookie\SensitiveCookieMetadata
 {
@@ -27,6 +28,6 @@ class SensitiveCookieMetadata extends \Magento\Framework\Stdlib\Cookie\Sensitive
      */
     public function __toArray()
     {
-        return Utils::wrapMetadata(parent::__toArray());
+        return Utils::wrapCookieMetadata(parent::__toArray());
     }
 }
