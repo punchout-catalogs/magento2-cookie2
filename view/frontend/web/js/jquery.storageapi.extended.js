@@ -8,18 +8,23 @@ define([
     'use strict';
 
     function _extend(storage) {
-        storage._samesite = window.cookiesConfig && window.cookiesConfig.samesite ? window.cookiesConfig.samesite : 'lax';
+        //keep it consistent with CE/EE 2.4.3+
+        storage._samesite = window.cookiesConfig && window.cookiesConfig.samesite ? window.cookiesConfig.samesite : 'None';
 
+        //almost fully-duplicated (with changes) part of code from 2.4.3 for
+        //CE/EE below 2.4.3
         storage.setItem = function (name, value, options) {
+            //-----------------------------------//
             options = options || {};
             options.samesite = 'None';//hardcode
+            //-----------------------------------//
 
             var _default = {
                 expires: this._expires,
                 path: this._path,
                 domain: this._domain,
                 secure: this._secure,
-                samesite: this._samesite
+                storage: this._samesite
             };
 
             $.cookie(this._prefix + name, value, $.extend(_default, options || {}));
@@ -31,7 +36,8 @@ define([
     }
 
     if ($.mage && $.mage.cookies) {
-        //duplicated part of code from 2.4.3 for CE/EE below 2.4.3
+        //fully-duplicated part of code from 2.4.3 for
+        //CE/EE below 2.4.3
         function lifetimeToExpires(options, defaults) {
             var expires,
                 lifetime;
@@ -47,11 +53,14 @@ define([
             return null;
         }
 
-        //duplicated part of code from 2.4.3 for CE/EE below 2.4.3
+        //almost fully-duplicated (with changes) part of code from 2.4.3 for
+        //CE/EE below 2.4.3
         $.extend($.mage.cookies, {
             set: function (name, value, options) {
+                //-----------------------------------//
                 options = options || {};
-                options.samesite = 'None';
+                options.samesite = 'None';//hardcode
+                //-----------------------------------//
                 //
                 var expires,
                     path,
