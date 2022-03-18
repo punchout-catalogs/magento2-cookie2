@@ -7,21 +7,16 @@ define([
 ], function ($) {
     'use strict';
 
-    console.info('poc jquery cookies init');
-
     function _extend(storage) {
         //keep it consistent with CE/EE 2.4.3+
-        storage._samesite = 'None';
-        storage._secure = true;
+        storage._samesite = window.cookiesConfig && window.cookiesConfig.samesite ? window.cookiesConfig.samesite : 'None';
 
         //almost fully-duplicated (with changes) part of code from 2.4.3 for
         //CE/EE below 2.4.3
         storage.setItem = function (name, value, options) {
             //-----------------------------------//
-            //hardcoded values
             options = options || {};
-            options.samesite = 'None';
-            options.secure = true;
+            options.samesite = 'None';//hardcode
             //-----------------------------------//
 
             var _default = {
@@ -34,7 +29,7 @@ define([
 
             $.cookie(this._prefix + name, value, $.extend(_default, options || {}));
         };
-    }
+    };
 
     if (window.cookieStorage) {
         _extend(window.cookieStorage);
@@ -63,12 +58,10 @@ define([
         $.extend($.mage.cookies, {
             set: function (name, value, options) {
                 //-----------------------------------//
-                // hardcoded values
                 options = options || {};
-                options.samesite = 'None';
-                options.secure = true;
+                options.samesite = 'None';//hardcode
                 //-----------------------------------//
-
+                //
                 var expires,
                     path,
                     domain,
