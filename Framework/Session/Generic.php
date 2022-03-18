@@ -37,6 +37,20 @@ class Generic extends \Magento\Framework\Session\Generic
      */
     protected function updateCookieParams()
     {
+        if (version_compare(PHP_VERSION, "7.3.0", ">=")) {
+            return $this->updateCookieParamsWithOptions();
+        } else {
+            return $this->updateCookieParamsWithoutOptions();
+        }
+    }
+
+    /**
+     * Handle PHP versions above and equal PHP 7.3
+     *
+     * @return $this
+     */
+    protected function updateCookieParamsWithOptions()
+    {
         $params = session_get_cookie_params();
         if (!empty($params['secure']) && !empty($params['samesite']) && (strtolower($params['samesite']) === 'none')) {
             return $this;
@@ -46,6 +60,38 @@ class Generic extends \Magento\Framework\Session\Generic
         $params['samesite'] = 'None';
 
         session_set_cookie_params($params);
+        return $this;
+    }
+
+    /**
+     * Handle PHP versions below PHP 7.3
+     *
+     * @return $this
+     */
+    protected function updateCookieParamsWithoutOptions()
+    {
+        $params = session_get_cookie_params();
+
+        if (!empty($params['secure']) && !empty($params['path'])
+            && (strpos($params['path'], 'SameSite') !== false)
+        ) {
+            return $this;
+        }
+
+        $params['secure'] = true;
+        $params['path'] = empty($params['path']) ? '/' : $params['path'];
+        if (strpos($params['path'], 'SameSite') === false) {
+            $params['path'] .= '; SameSite=None';
+        }
+
+        session_set_cookie_params(
+            $params['lifetime'],
+            $params['path'],
+            $params['domain'],
+            !empty($params['secure']),
+            !empty($params['httponly'])
+        );
+
         return $this;
     }
 }

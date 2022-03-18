@@ -19,5 +19,6 @@ $scriptString = "
     window.cookiesConfig.samesite = '$sameSite';
 ";
 ?>
-
+<?php if (isset($secureRenderer)): ?>
 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+<?php endif; ?>
