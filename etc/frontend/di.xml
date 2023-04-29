@@ -7,4 +7,8 @@
     <preference for="Magento\Framework\Stdlib\Cookie\CookieMetadata"  type="Punchout\Cookie2\Stdlib\Cookie\CookieMetadata" />
     <preference for="Magento\Framework\Stdlib\Cookie\PublicCookieMetadata"    type="Punchout\Cookie2\Stdlib\Cookie\PublicCookieMetadata" />
     <preference for="Magento\Framework\Stdlib\Cookie\SensitiveCookieMetadata" type="Punchout\Cookie2\Stdlib\Cookie\SensitiveCookieMetadata" />
+
+    <type name="Magento\Framework\Data\Form\FormKey\Validator">
+        <plugin name="punchout_gateway_framework_form_key_validator" type="Punchout\Cookie2\Plugin\Framework\Data\Form\FormKey\Validator" sortOrder="1000" />
+    </type>
 </config>
