@@ -30,6 +30,7 @@ if ($shouldDeclareMethods) {
          */
         protected function setCookie($name, $value, array $metadataArray)
         {
+            $value = $value ?? '';
             $expire = $this->computeExpirationTime($metadataArray);
 
             $this->checkAbilityToSendCookie($name, $value);
